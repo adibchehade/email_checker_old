@@ -81,10 +81,14 @@ for url in urls_to_check:
     try:
         log.info('waiting response from {}'.format(req.full_url))
         response = urllib.request.urlopen(req, body)
-        # Save 200 response url to file
-        with open(APIS_FILE_OUTPUT, 'a') as fp:
-            fp.write(url)
-        log.info('200: {}'.format(req.full_url))
+
+        if response.getcode() == 200:
+            # Save 200 response url to file
+            with open(APIS_FILE_OUTPUT, 'a') as fp:
+                fp.write(url)
+            log.info('Status 200: {}'.format(req.full_url))
+        else:
+            log.info('Status {}'.format(response.getcode()))
     
     except urllib.error.HTTPError as e:
         log.info('{} {}: {}'.format(e.code, e.reason, req.full_url))
