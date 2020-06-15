@@ -1,5 +1,5 @@
 import urllib
-import urllib.requests
+import urllib.request
 import random
 import time
 from urllib_get_session_threaded import get_session_id
