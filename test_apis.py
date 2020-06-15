@@ -61,7 +61,11 @@ log.info('session id created: {}'.format(session_id))
 # Test the urls from APIS_FILE
 urls_200 = []
 for url in urls_to_check:
-    req.full_url = '{}?timestamp={}'.format(url, str(int(time.time()*1000)))
+    if req.full_url.find('EmailValidation'):
+        req.full_url = '{}?timestamp={}'.format(url, str(int(time.time()*1000)))
+    #GetUserChallenges
+    else:
+        req.full_url = url
 
     body = json.dumps({
         'email': email,
