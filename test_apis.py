@@ -85,7 +85,7 @@ for url in urls_to_check:
         if response.getcode() == 200:
             # Save 200 response url to file
             with open(APIS_FILE_OUTPUT, 'a') as fp:
-                fp.write(url)
+                fp.write('{}\n'.format(url))
             log.info('Status 200: {}'.format(req.full_url))
         else:
             log.info('Status {}'.format(response.getcode()))
