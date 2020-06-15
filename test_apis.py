@@ -62,7 +62,6 @@ log.info('session id created: {}'.format(session_id))
 urls_200 = []
 for url in urls_to_check:
     req.full_url = '{}?timestamp={}'.format(url, str(int(time.time()*1000)))
-    log.info(req.full_url)
 
     body = json.dumps({
         'email': email,
@@ -76,6 +75,7 @@ for url in urls_to_check:
         # Save 200 response url to file
         with open(APIS_FILE_OUTPUT, 'a') as fp:
             fp.write(url)
+        log.info('200: {}'.format(req.full_url))
     
     except urllib.error.HTTPError as e:
-        log.info('{} {}'.format(e.code, e.reason))
+        log.info('{} {}: {}'.format(e.code, e.reason, req.full_url))
