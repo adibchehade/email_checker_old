@@ -63,6 +63,7 @@ urls_200 = []
 for url in urls_to_check:
     if req.full_url.find('EmailValidation'):
         req.full_url = '{}?timestamp={}'.format(url, str(int(time.time()*1000)))
+
     #GetUserChallenges
     else:
         req.full_url = url
@@ -74,7 +75,11 @@ for url in urls_to_check:
         'bashPath': '/us/en'
     }).encode()
 
+    # Add a delay between requests
+    time.sleep(random.randint(2, 4))
+
     try:
+        log.info('waiting response from {}'.format(req.full_url))
         response = urllib.request.urlopen(req, body)
         # Save 200 response url to file
         with open(APIS_FILE_OUTPUT, 'a') as fp:
@@ -83,3 +88,6 @@ for url in urls_to_check:
     
     except urllib.error.HTTPError as e:
         log.info('{} {}: {}'.format(e.code, e.reason, req.full_url))
+
+    except Exception as e:
+        log.info(e)
